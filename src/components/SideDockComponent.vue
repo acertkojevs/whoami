@@ -6,18 +6,6 @@ const desktopStore = useDesktopStore().Applications
 
 function openApp(item: DesktopApp) {
   item.isOpen = true
-  crateDiv()
-}
-
-function crateDiv() {
-  const newDiv = document.createElement('div')
-  const newContent = document.createTextNode('Hi there and greetings!')
-  newDiv.appendChild(newContent)
-  const currentDiv = document.getElementById('test')
-  if (currentDiv) currentDiv.appendChild(newDiv)
-  else {
-    console.log('Could not found')
-  }
 }
 </script>
 
