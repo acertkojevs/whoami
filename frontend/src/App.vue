@@ -5,9 +5,7 @@ import MainView from './views/MainView.vue'
 
 <template>
   <div class="relative min-h-screen">
-    <div class="">
-      <MainView />
-    </div>
-    <FooterView class="absolute bottom-0 w-100%" />
+    <MainView />
+    <FooterView class="absolute bottom-0 w-100%" ref="height" />
   </div>
 </template>

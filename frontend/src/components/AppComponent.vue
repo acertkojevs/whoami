@@ -7,9 +7,6 @@ const desktopStore = useDesktopStore().Applications
 const selectedAppName = ref('')
 const itemRefs = useTemplateRef('items')
 const app = ref<HTMLDivElement | null>(null)
-const pointerYStartup = ref(0)
-const pointerXStartup = ref(0)
-const selectedItem = ref(null)
 const offsetX = ref(0)
 const offsetY = ref(0)
 const selectedAppObj = ref<DesktopApp>()
@@ -57,10 +54,12 @@ watch(
 function startDrag(e: PointerEvent, item: DesktopApp) {
   selectedAppObj.value = item
 
+  console.log(app.value?.clientWidth)
+  // console.log(item.y_axis)
   // offset
+
   offsetX.value = e.clientX - item.x_axis
   offsetY.value = e.clientY - item.y_axis
-  console.log('Nobīde:', offsetX.value, offsetY.value)
 
   window.addEventListener('pointermove', dragging)
   window.addEventListener('pointerup', closeDrag)
@@ -69,11 +68,19 @@ function startDrag(e: PointerEvent, item: DesktopApp) {
 function dragging(e: PointerEvent) {
   const posx = e.clientX - offsetX.value
   const posy = e.clientY - offsetY.value
-  console.log('element x and y', e.clientX, e.clientY)
+
+  const totalX = ref(0)
+  const totalY = ref(0)
+
+  if (app.value) {
+    totalX.value = window.innerWidth - app.value?.getBoundingClientRect().width
+    totalY.value = window.innerHeight - app.value?.getBoundingClientRect().height
+  }
 
   if (selectedAppObj.value) {
-    selectedAppObj.value.x_axis = posx
-    selectedAppObj.value.y_axis = posy
+    // console.log(selectedAppObj.value.x_axis, window.innerWidth, app.value?.clientWidth)
+    selectedAppObj.value.x_axis = Math.max(Math.min(posx, totalX.value), 0)
+    selectedAppObj.value.y_axis = Math.max(Math.min(posy, totalY.value), 0)
   }
 }
 
@@ -88,7 +95,7 @@ function closeDrag() {
   <template v-for="item in desktopStore" :key="item.name">
     <template v-if="item.isOpen">
       <div
-        class="absolute w-50 border"
+        class="absolute w-50 border bg-sky-700"
         ref="items"
         :style="{ top: `${item.y_axis}px`, left: `${item.x_axis}px` }"
         :class="`${item.name}`"
@@ -97,7 +104,7 @@ function closeDrag() {
         <div class="flex flex-row justify-between gap-2 border-t">
           <div>{{ item.name }}</div>
           <button @click="item.isOpen = false">Close</button>
-          <div>Y = {{ item.y_axis }}; X = {{ item.x_axis }}</div>
+          <!-- <div>Y = {{ item.y_axis }}; X = {{ item.x_axis }}</div> -->
         </div>
       </div>
     </template>
