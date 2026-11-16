@@ -36,6 +36,14 @@ export const useDesktopStore = defineStore('desktopStore', () => {
       y_axis: 0,
       z_index: 0,
     },
+    {
+      name: 'Settings',
+      icon_img: 'Settings',
+      isOpen: false,
+      x_axis: 0,
+      y_axis: 0,
+      z_index: 0,
+    },
   ])
 
   function updateAppPosition(appName: string, x: number, y: number) {

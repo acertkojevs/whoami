@@ -1,4 +1,4 @@
-export type AppName = 'About' | 'Settings' | 'Stats' | 'Music' | 'Message'
+export type AppName = 'About' | 'Settings' | 'Stats' | 'Music' | 'Contact'
 
 export interface DesktopApp {
   name: AppName
