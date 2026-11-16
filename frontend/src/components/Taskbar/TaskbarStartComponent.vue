@@ -4,6 +4,13 @@ import { onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue'
 
 const isStartMenuOpen = ref(false)
 const taskbarRef = useTemplateRef('taskbarRef')
+const menuItems = [
+  { label: 'About' },
+  { label: 'Settings' },
+  { label: 'Stats' },
+  { label: 'Now playing' },
+  { label: 'Message' },
+]
 
 function handleClickOutside(event: MouseEvent) {
   if (!taskbarRef.value?.contains(event.target as Node)) {
@@ -31,15 +38,23 @@ onBeforeUnmount(() => {
     </button>
     <div v-if="isStartMenuOpen" class="absolute bottom-full flex flex-row">
       <!-- Left sidebar -->
-      <div class="w-6 h-48 bg-[#302547] flex items-end justify-center">
+      <div class="w-6 bg-[#302547] flex items-end justify-center">
         <span class="[writing-mode:vertical-rl] rotate-180 pt-2"> whoami.os First edition </span>
       </div>
 
       <!-- Right menu -->
-      <ul class="bg-[#D9D1EE] w-40">
-        <li class="hover:bg-[#C5B8E5] cursor-pointer p-2">About</li>
-        <li class="hover:bg-[#C5B8E5] cursor-pointer p-2">Settings</li>
-        <li class="hover:bg-[#C5B8E5] cursor-pointer p-2">Stats</li>
+      <ul class="bg-[#D9D1EE] w-40 py-1 flex flex-col gap-1">
+        <li
+          v-for="item in menuItems"
+          :key="item.label"
+          class="hover:bg-[#C5B8E5] cursor-pointer p-2 text-black"
+        >
+          {{ item.label }}
+        </li>
+
+        <div class="h-px bg-[#8B7BA8] mx-2 my-1"></div>
+
+        <li class="hover:bg-[#C5B8E5] cursor-pointer p-2 text-black">Shut down</li>
       </ul>
     </div>
   </div>
