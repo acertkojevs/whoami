@@ -2,6 +2,7 @@
 import { useTemplateRef, watch, ref } from 'vue'
 import { useDesktopStore } from '@/stores/useDesktopStore'
 import type { DesktopApp } from '@/interfaces/DesktopApp'
+import { Icon } from '@iconify/vue'
 
 const desktopStore = useDesktopStore().Applications
 const selectedAppName = ref('')
@@ -54,10 +55,7 @@ watch(
 function startDrag(e: PointerEvent, item: DesktopApp) {
   selectedAppObj.value = item
 
-  console.log(app.value?.clientWidth)
-  // console.log(item.y_axis)
   // offset
-
   offsetX.value = e.clientX - item.x_axis
   offsetY.value = e.clientY - item.y_axis
 
@@ -78,14 +76,12 @@ function dragging(e: PointerEvent) {
   }
 
   if (selectedAppObj.value) {
-    // console.log(selectedAppObj.value.x_axis, window.innerWidth, app.value?.clientWidth)
     selectedAppObj.value.x_axis = Math.max(Math.min(posx, totalX.value), 0)
     selectedAppObj.value.y_axis = Math.max(Math.min(posy, totalY.value), 0)
   }
 }
 
 function closeDrag() {
-  console.log('released')
   window.removeEventListener('pointermove', dragging)
   window.removeEventListener('pointerup', closeDrag)
 }
@@ -95,17 +91,39 @@ function closeDrag() {
   <template v-for="item in desktopStore" :key="item.name">
     <template v-if="item.isOpen">
       <div
-        class="absolute w-50 border bg-sky-700"
+        class="absolute w-200 bg-[#D9D1EE]"
         ref="items"
         :style="{ top: `${item.y_axis}px`, left: `${item.x_axis}px` }"
         :class="`${item.name}`"
       >
-        <div class="cursor-grab" @pointerdown="startDrag($event, item)">Draggable</div>
-        <div class="flex flex-row justify-between gap-2 border-t">
+        <div
+          class="flex flex-row justify-between align-middle px-2 py-1 bg-linear-to-r from-[#68419B] to-[#B265AD]"
+          @pointerdown="startDrag($event, item)"
+        >
           <div>{{ item.name }}</div>
-          <button @click="item.isOpen = false">Close</button>
-          <!-- <div>Y = {{ item.y_axis }}; X = {{ item.x_axis }}</div> -->
+          <div class="flex flex-row gap-1.5 justify-center">
+            <button
+              class="flex items-center justify-center bg-[#D9D1EE] w-6 h-6 border-l border-t-[#F6EDFF] border-l-[#F6EDFF] cursor-pointer"
+              @pointerdown.stop
+            >
+              <Icon icon="akar-icons:minus" class="text-[#302547] w-3 h-3" />
+            </button>
+            <button
+              class="flex items-center justify-center bg-[#D9D1EE] w-6 h-6 border-l border-t-[#F6EDFF] border-l-[#F6EDFF] cursor-pointer"
+              @pointerdown.stop
+            >
+              <Icon icon="akar-icons:square" class="text-[#302547] w-3 h-3" />
+            </button>
+            <button
+              class="flex items-center justify-center bg-[#D9D1EE] w-6 h-6 border-l border-t-[#F6EDFF] border-l-[#F6EDFF] cursor-pointer"
+              @pointerdown.stop
+              @click="item.isOpen = false"
+            >
+              <Icon icon="akar-icons:cross" class="text-[#302547] w-3 h-3" />
+            </button>
+          </div>
         </div>
+        <div class="flex flex-row justify-between gap-2"></div>
       </div>
     </template>
   </template>
