@@ -29,8 +29,8 @@ export const useDesktopStore = defineStore('desktopStore', () => {
       z_index: 0,
     },
     {
-      name: 'Message',
-      icon_img: 'Message',
+      name: 'Contact',
+      icon_img: 'Contact',
       isOpen: false,
       x_axis: 0,
       y_axis: 0,

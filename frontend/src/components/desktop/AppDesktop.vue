@@ -5,7 +5,7 @@ import AboutApp from '../app/AboutApp.vue'
 import SettingsApp from '../app/SettingsApp.vue'
 import StatsApp from '../app/StatsApp.vue'
 import MusicApp from '../app/MusicApp.vue'
-import MessageApp from '../app/MessageApp.vue'
+import ContactApp from '../app/ContactApp.vue'
 
 const desktopStoreApps = useDesktopStore().Applications
 
@@ -14,7 +14,7 @@ const appComponents = {
   Settings: SettingsApp,
   Stats: StatsApp,
   Music: MusicApp,
-  Message: MessageApp,
+  Contact: ContactApp,
 }
 </script>
 

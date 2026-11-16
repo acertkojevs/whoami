@@ -61,7 +61,7 @@ onMounted(() => {
 </script>
 <template>
   <div
-    class="absolute w-200 bg-[#D9D1EE]"
+    class="absolute w-200 bg-[#D9D1EE] p-0.5"
     ref="app"
     :style="{ top: `${item.y_axis}px`, left: `${item.x_axis}px`, 'z-index': `${item.z_index}` }"
     :class="`${item.name}`"
