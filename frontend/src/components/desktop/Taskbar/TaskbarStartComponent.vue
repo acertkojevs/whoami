@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 import { onBeforeUnmount, onMounted, ref, useTemplateRef } from 'vue'
+import { useDesktopStore } from '@/stores/useDesktopStore'
 
 const isStartMenuOpen = ref(false)
 const taskbarRef = useTemplateRef('taskbarRef')
-const menuItems = [
-  { label: 'About' },
-  { label: 'Settings' },
-  { label: 'Stats' },
-  { label: 'Now playing' },
-  { label: 'Message' },
-]
+const desktopStore = useDesktopStore()
+const menuItems = useDesktopStore().Applications
+
+function handleMenuItemClick(item: { name: string }) {
+  desktopStore.openApp(item.name)
+  isStartMenuOpen.value = false
+}
 
 function handleClickOutside(event: MouseEvent) {
   if (!taskbarRef.value?.contains(event.target as Node)) {
@@ -46,10 +47,11 @@ onBeforeUnmount(() => {
       <ul class="bg-[#D9D1EE] w-40 py-1 flex flex-col gap-1">
         <li
           v-for="item in menuItems"
-          :key="item.label"
+          :key="item.name"
           class="hover:bg-[#C5B8E5] cursor-pointer p-2 text-black"
+          @click="handleMenuItemClick(item)"
         >
-          {{ item.label }}
+          {{ item.name }}
         </li>
 
         <div class="h-px bg-[#8B7BA8] mx-2 my-1"></div>

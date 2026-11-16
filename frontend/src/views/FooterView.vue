@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TaskbarComponenet from '@/components/Taskbar/TaskbarComponent.vue'
+import TaskbarComponenet from '@/components/desktop/Taskbar/TaskbarComponent.vue'
 </script>
 
 <template>
